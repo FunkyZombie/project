@@ -8,137 +8,90 @@
 <!--
 Обязательное задание.
 
-Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
-Необходимо создать функцию-конструктор/класс для поста в социальной сети.
-Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
-Пост должен хранить:
-1. Автора поста (имени достаточно).
-2. Текст поста. 
-3. Дату и время последнего изменения поста.
-Данные автора поста и текст поста необходимо передавать при создании
-экземпляра объекта.
-Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
-менять текст поста.
-
----
-
-Необходимо создать функцию-конструктор/класс для закрепленного поста в
-социальной сети.
-Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
-Закрепленный пост должен наследоваться от обычного поста.
-Данные автора поста и текст поста необходимо передавать при создании
-экземпляра объекта.
-Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
-будет лежать значение false (это свойство будет обозначать, будет ли наш
-закрепленный пост подсвечен).
-У экземпляров объекта закрепленного поста должен быть метод с названием
-`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
-(будет менять свойство `highlighted`).
-
----
-
-Подсказки:
-1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
-2. Обратите внимание что пост хранит "дату и время последнего изменения
-поста", это значит что если пост кто-то изменит (например вызовет какой-то
-метод, который изменит что-то в посте), дата и время последнего изменения
-поста также должна измениться.
-3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
-что-нибудь пропустить.
-4. Если непонятно условие - задайте вопрос.
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
 -->
+
+<p class="dropdown">Привет :)</p>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="menu dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+
 <script>
   "use strict";
 
-  // ------ES5------
+  /*
+  1. Ко всем элементам, имеющим класс "dropdown-item" добавить еще один класс
+  "super-dropdown", необходимо использовать методы forEach и querySelectorAll и
+  свойство classList у элементов.
+   */
+  document.querySelectorAll('.dropdown-item').forEach(elem => {
+    elem.classList.add('super-dropdown');
+  });
 
-  function PostES5(author, message) {
-    this.author = author;
-    this.message = message;
-    this.date = new Date()
+  /*
+  2. У элемента с классом btn необходимо убрать класс "btn-secondary", если он
+  присутствует у этого элемента, либо добавить, если такого класса у элемента
+  не было.
+   */
+  document.querySelector('.btn').addEventListener('click', () => {
+    document.querySelector('.btn').classList.toggle('btn-secondary');
+  });
+
+  /*
+  3. Необходимо удалить класс "dropdown-menu" у элемента, у которого
+  присутствует класс "menu".
+   */
+  document.querySelector('.menu').classList.remove('dropdown-menu');
+
+  /*
+  4. Используя метод insertAdjacentHTML добавьте после div'a с классом
+  "dropdown" следующую разметку:
+    <a href="#">link</a>
+   */
+  document
+    .querySelector('div.dropdown')
+    .insertAdjacentHTML('afterend', `<a href="#">link</a>`);
+
+  /*
+  5. У элемента с id "dropdownMenuButton" замените id на "superDropdown".
+   */
+  document.getElementById('dropdownMenuButton').id = "superDropdown";
+
+  /*
+  6. Добавьте атрибут data-dd со значением 3 элементу у которого существует
+  атрибут "aria-labelledby" равный "dropdownMenuButton" используя dataset.
+   */
+  document
+    .querySelector('[aria-labelledby="dropdownMenuButton"]')
+    .dataset.dd = '3';
+
+  /*
+  7. Удалите атрибут type у элемента с классом "dropdown-toggle".
+   */
+  document.querySelector('.dropdown-toggle').removeAttribute('type');
+
+  /*
+  8. Выведите в консоль все имеющиеся атрибуты и их значения тега у которого
+  есть все два класса btn и dropdown-toggle.
+  Вывод каждого атрибута и значений должен выглядеть следующим образом (пример):
+  Атрибут "class" содержит значение "btn btn-secondary dropdown-toggle"
+   */
+  const attributes = document
+    .querySelector('.btn.dropdown-toggle')
+    .attributes;
+
+  for (const attr of attributes) {
+    console.log(`Атрибут "${attr.name}" содержит значение "${attr.value}"`)
   }
-
-  PostES5.prototype.edit = function(message) {
-    this.message = message;
-    this.date = new Date();
-  }
-
-  function AttachedPostES5(author, message) {
-    PostES5.call(this, author, message)
-    this.highlighted = false;
-  }
-
-  AttachedPostES5.prototype =  Object.create(PostES5.prototype);
-  AttachedPostES5.prototype.constructor = AttachedPostES5;
-
-  AttachedPostES5.prototype.makeTextHighlighted = function() {
-    if (this.highlighted === false) {
-      this.date = new Date();
-      return this.highlighted = true;
-    }
-    this.date = new Date();
-    return this.highlighted = false;
-  }
-
-  let post0 = [
-  new PostES5('Артемий', 'Текст сообщения'),
-  new AttachedPostES5('Генадий', 'Текст сообщения')
-  ]
-
-  console.log(post0[0]);
-  post0[0].edit('Новый текст сообщения');
-  console.log(post0[0]);
-  //----------------
-  console.log(post0[1]);
-  post0[1].edit('Новый текст сообщения');
-  post0[1].makeTextHighlighted()
-  console.log(post0[1]);
-  
-
-  // ------ES6------
-
-
-  class PostES6 {
-    constructor(author, message) {
-      this.author = author;
-      this.message = message;
-      this.date = new Date()
-    }
-
-    edit(message) {
-    this.message = message;
-    this.date = new Date();
-    }
-  }
-
-  let post1 = new PostES6('Ирина', 'Старое сообщение');
-
-  class AttachedPostES6 extends PostES6 {
-    constructor(author, message) {
-      super(author, message);
-      this.highlighted = false;
-    }
-
-    makeTextHighlighted(highlighted) {
-      if (this.highlighted === false) {
-        this.date = new Date();
-        return this.highlighted = true;
-      }
-      this.date = new Date();
-      return this.highlighted = false;
-    }
-  }
-
-  let post2 = new AttachedPostES6('Акихико', 'Старое сообщение');
-
-  console.log(post1);
-  post1.edit('Новый текст сообщения');
-  console.log(post1);
-  //----------------
-  console.log(post2);
-  post2.edit('Новый текст сообщения');
-  post2.makeTextHighlighted()
-  console.log(post2);
 
 </script>
 </body>
