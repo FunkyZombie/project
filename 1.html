@@ -3,33 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <title>Homework</title>
+  <style>
+    .product {
+      width: 200px;
+      padding: 10px;
+      float: left;
+      margin-right: 30px;
+      box-shadow: 0 0 4px black;
+    }
+  </style>
 </head>
 <body>
 <!--
 Обязательное задание.
 
-Необходимо пользователя попросить ввести температуру в градусах Цельсия,
-преобразовать введенное пользователем значение в соответствующую температуру
-в градусах по Фаренгейту и вывести в alert сообщение с текстом:
-"Цельсий: {C}, Фаренгейт: {F}"
-Где вместо {C} и {F} должны быть подставлены соответствующие значения, которые
-были получены ранее.
-Формула перевода градусов Цельсия в градусы Фаренгейта:
-градусы Фаренгейта = (9 / 5) * градусы Цельсия + 32
-
-Уточнение: пользователь всегда вводит корректное число.
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
 -->
+<div class="product">
+  <div class="productName">Товар 1</div>
+  <img src="https://picsum.photos/id/367/200/300" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 2</div>
+  <img src="https://picsum.photos/id/425/200/300" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 3</div>
+  <img src="https://picsum.photos/id/429/200/300" alt="">
+  <button>В корзину</button>
+</div>
+
 <script>
   "use strict";
 
-const tCelcius = +prompt('Введите температуру в градусах цельсия');
+  /*
+  1. Установите всем элементам с классом "productName" размер шрифта 24px.
+   */
+  const productsName = document.querySelectorAll('.product > .productName');
 
-if (tCelcius !== tCelcius) {
-  alert('Ошибка! Введите число.');
-} else {
-  const tFahrenheit = (tCelcius * 9 / 5) + 32;
-  alert(`Цельсий: ${tCelcius}, Фаренгейт: ${tFahrenheit.toFixed(1)}`);
-}
+  for (const product of productsName) {
+    product.style.fontSize = '24px';
+  }
+
+  /*
+  2. Установите всем элементам с классом "product" внешний отступ справа 50px.
+   */
+  const products = document.querySelectorAll('.product');
+
+  for (const product of products) {
+    product.style.marginRight = '50px';
+  }
+
+  /*
+  3. При клике на кнопку "В корзину" название кнопки должно поменяться на
+  "Добавлено" и кнопка должна стать неактивной.
+   */
+  document.body.addEventListener('click', btn => {
+    const button = btn.target;
+    if (button.tagName !== "BUTTON") {
+      return;
+    }
+    button.textContent = 'Добавлено';
+    button.disabled = true;
+  });
+  // const btns = document.querySelectorAll('.product > button');
+
+  // for (const btn of btns) {
+  //   btn.addEventListener('click', () => {
+  //     btn.textContent = 'Добавлено';
+  //     btn.disabled = true;
+  //   })
+  // }
+  
+
+  /*
+  4. Создайте полную (глубокую) копию элемента с классом product, измените в
+  этой копии путь до картинки на:
+  https://picsum.photos/id/1080/200/300
+  Поставьте название товара в данной копии "Товар 4" и замените последний
+  отображенный товар на странице на созданную копию. У данной копии также
+  должен правильно работать код из 3-го задания.
+   */
+  const copyProduct = document.querySelector('.product').cloneNode(true);
+
+  copyProduct
+    .querySelector('img')
+    .src = 'https://picsum.photos/id/1080/200/300';
+  copyProduct.querySelector('.productName').textContent = 'Товар 4';
+  document.querySelector('.product:last-of-type').replaceWith(copyProduct);
+
+
+  /*
+  5. По истечении 2 секунд с момента открытия страницы первый товар должен быть
+  удален из html.
+   */
+
+  setTimeout(() => {
+    document.querySelector('.product:first-of-type').remove();
+  }, 2000);
 
 </script>
 </body>
