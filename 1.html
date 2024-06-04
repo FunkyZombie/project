@@ -8,26 +8,63 @@
 <!--
 Обязательное задание.
 
-Необходимо с помощью цикла for вывести следующие 11 строк в консоль:
-0 – это ноль
-1 – нечетное число
-2 – четное число
-3 – нечетное число
-…
-10 – четное число
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для продукта.
+Названия: `ProductES5` для es5 стиля, `ProductES6` для es6 стиля.
+При создании объекта от функции-конструктора/класса необходимо передавать имя
+и цену товара, эта информация должна быть сохранена в объекте.
+Также у объекта должна быть возможность выполнить метод `make25Discount`, данный
+метод должен уменьшать стоимость продукта на 25%.
+Необходимо продемонстрировать работу с объектом (в свободной форме).
 -->
 <script>
   "use strict";
+  
+  // --------ES5-------- 
 
-  for (let i = 0; i <= 10; i++) {
-    if (i === 0) {
-      console.log((`${i} – это ноль`));
-    } else if (i % 2 === 0) {
-      console.log(`${i} – четное число`);
-    } else {
-      console.log(`${i} – нечетное число`);
+  ProductES5.prototype.make25Discount = function() {
+    return this.price *= 0.75;
+  } ;
+
+  function ProductES5(productName, price) {
+    this.productName = productName;
+    this.price = price;
+  };
+
+  const mango = new ProductES5('Манго', 470);
+  const melon = new ProductES5('Дыня', 90);
+
+  console.log(
+    `${mango.productName} - цена без скидки ${mango.price}р.`
+    );
+
+  console.log(
+    `${melon.productName} - цена со скидкой 25% ${melon.make25Discount()}р.`
+    );
+
+  // --------ES6-------- 
+
+  class ProductES6 {
+    constructor(productName, price) {
+      this.productName = productName;
+      this.price = price;
     }
-  }
+
+    make25Discount() {
+    return this.price *= 0.75;
+    } 
+  };
+
+  const apple = new ProductES6('Яблоки', 70);
+  const avokado = new ProductES6('Авокадо', 110);
+
+  console.log(
+    `${avokado.productName} - цена со скидкой 25% ${avokado.make25Discount()}р.`
+    );
+    
+  console.log(
+    `${apple.productName} - цена без скидки ${apple.price}р.`
+    );
 
 </script>
 </body>
